@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserRepository = void 0;
-const bcrypt_1 = require("bcrypt");
+const bcryptjs_1 = require("bcryptjs");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const uuid_1 = require("uuid");
 const mysql_1 = require("../../../mysql");
@@ -9,7 +9,7 @@ class UserRepository {
     create(request, response) {
         const { name, email, password } = request.body;
         mysql_1.pool.getConnection((err, connection) => {
-            (0, bcrypt_1.hash)(password, 10, (err, hash) => {
+            (0, bcryptjs_1.hash)(password, 10, (err, hash) => {
                 if (err) {
                     return response.status(500).json(err);
                 }
@@ -34,7 +34,7 @@ class UserRepository {
                 if (results.length === 0) {
                     return response.status(400).json({ error: "Usuario não encontrado" });
                 }
-                (0, bcrypt_1.compare)(password, results[0].password, (err, result) => {
+                (0, bcryptjs_1.compare)(password, results[0].password, (err, result) => {
                     if (err) {
                         console.log("Erro ao comparar senha:", err);
                         return response.status(400).json({ error: "Erro na sua autenticação" });

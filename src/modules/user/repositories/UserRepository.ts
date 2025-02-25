@@ -1,4 +1,4 @@
-import { compare, hash } from 'bcrypt';
+import { compare, hash } from 'bcryptjs';
 import { Request, Response } from "express";
 import { sign, verify } from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
